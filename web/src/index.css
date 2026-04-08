@@ -1,0 +1,846 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Kitchensink dark theme (gold / brass / deep navy) ── */
+
+:root {
+  color-scheme: dark;
+
+  --radius: 0.75rem;
+  --font-sans: "Manrope", sans-serif;
+  --font-serif: "Fraunces", serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* Semantic color tokens — dark-only app */
+  --background: oklch(0.11 0.012 260);
+  --foreground: oklch(0.95 0.01 75);
+
+  --card: oklch(0.14 0.012 260);
+  --card-foreground: oklch(0.95 0.01 75);
+
+  --popover: oklch(0.12 0.014 260);
+  --popover-foreground: oklch(0.95 0.01 75);
+
+  --primary: oklch(0.82 0.12 75);
+  --primary-foreground: oklch(0.15 0.03 60);
+
+  --secondary: oklch(0.2 0.012 260);
+  --secondary-foreground: oklch(0.88 0.02 75);
+
+  --muted: oklch(0.22 0.01 260);
+  --muted-foreground: oklch(0.68 0.03 70);
+
+  --accent: oklch(0.2 0.015 260);
+  --accent-foreground: oklch(0.92 0.01 75);
+
+  --destructive: oklch(0.65 0.2 25);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.7 0.1 75);
+
+  /* Extended palette */
+  --gold: oklch(0.82 0.12 75);
+  --gold-soft: oklch(0.72 0.1 70);
+  --blue: oklch(0.76 0.08 220);
+  --blue-soft: oklch(0.65 0.07 220);
+  --danger: oklch(0.72 0.18 25);
+
+  --info: oklch(0.25 0.06 240);
+  --info-foreground: oklch(0.76 0.08 220);
+  --success: oklch(0.25 0.05 160);
+  --success-foreground: oklch(0.76 0.14 160);
+  --warning: oklch(0.28 0.06 75);
+  --warning-foreground: oklch(0.82 0.12 75);
+  --error: oklch(0.22 0.06 25);
+  --error-foreground: oklch(0.72 0.18 25);
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --color-danger: var(--danger);
+
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Base layer ── */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    @apply bg-primary/30 text-foreground;
+  }
+
+  html, body, #root {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  body {
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground font-sans;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 15% 5%, oklch(0.82 0.12 75 / 0.08), transparent 36rem),
+      radial-gradient(ellipse at 85% 90%, oklch(0.76 0.08 220 / 0.06), transparent 40rem),
+      linear-gradient(180deg, oklch(0.08 0.012 260) 0%, var(--background) 100%);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image:
+      linear-gradient(oklch(1 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(1 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(circle at center, black, transparent 78%);
+  }
+
+  a {
+    @apply text-gold;
+    text-decoration: none;
+  }
+  a:hover {
+    @apply underline;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* ── Zaidan component styles (Nova theme, adapted) ── */
+
+/* Button */
+.z-button {
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 rounded-lg border border-transparent bg-clip-padding text-sm font-medium focus-visible:ring-[3px] [&_svg:not([class*='size-'])]:size-4;
+}
+.z-button-variant-default {
+  @apply bg-primary text-primary-foreground hover:bg-primary/85;
+}
+.z-button-variant-outline {
+  @apply border-border bg-transparent hover:bg-muted hover:text-foreground;
+}
+.z-button-variant-secondary {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+}
+.z-button-variant-ghost {
+  @apply hover:bg-muted hover:text-foreground;
+}
+.z-button-variant-destructive {
+  @apply bg-destructive/15 hover:bg-destructive/25 text-danger;
+}
+.z-button-variant-link {
+  @apply text-gold underline-offset-4 hover:underline;
+}
+.z-button-size-xs {
+  @apply h-6 gap-1 rounded-md px-2 text-xs [&_svg:not([class*='size-'])]:size-3;
+}
+.z-button-size-sm {
+  @apply h-7 gap-1 rounded-md px-2.5 text-[0.8rem] [&_svg:not([class*='size-'])]:size-3.5;
+}
+.z-button-size-default {
+  @apply h-8 gap-1.5 px-3;
+}
+.z-button-size-lg {
+  @apply h-9 gap-1.5 px-4;
+}
+.z-button-size-icon-xs {
+  @apply size-6 rounded-md [&_svg:not([class*='size-'])]:size-3;
+}
+.z-button-size-icon-sm {
+  @apply size-7 rounded-md;
+}
+.z-button-size-icon {
+  @apply size-8;
+}
+.z-button-size-icon-lg {
+  @apply size-9;
+}
+
+/* Card */
+.z-card {
+  @apply ring-foreground/8 bg-card text-card-foreground gap-4 overflow-hidden rounded-xl py-4 text-sm ring-1 has-data-[slot=card-footer]:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3;
+}
+.z-card-header {
+  @apply gap-1 rounded-t-xl px-4 group-data-[size=sm]/card:px-3;
+}
+.z-card-title {
+  @apply text-base leading-snug font-medium group-data-[size=sm]/card:text-sm;
+}
+.z-card-description {
+  @apply text-muted-foreground text-sm;
+}
+.z-card-content {
+  @apply px-4 group-data-[size=sm]/card:px-3;
+}
+.z-card-footer {
+  @apply bg-muted/40 rounded-b-xl border-t p-4 group-data-[size=sm]/card:p-3;
+}
+
+/* Badge */
+.z-badge {
+  @apply h-5 gap-1 rounded-full border border-transparent px-2 py-0.5 text-xs font-medium [&>svg]:size-3!;
+}
+.z-badge-variant-default {
+  @apply bg-primary text-primary-foreground;
+}
+.z-badge-variant-secondary {
+  @apply bg-secondary text-secondary-foreground;
+}
+.z-badge-variant-destructive {
+  @apply bg-destructive/15 text-danger;
+}
+.z-badge-variant-outline {
+  @apply border-border text-foreground;
+}
+.z-badge-variant-ghost {
+  @apply text-muted-foreground hover:bg-muted;
+}
+
+/* Input */
+.z-input {
+  @apply bg-input/30 border-input focus-visible:border-ring focus-visible:ring-ring/50 h-8 rounded-lg border px-2.5 py-1 text-base transition-colors focus-visible:ring-[3px] md:text-sm;
+}
+
+/* Textarea */
+.z-textarea {
+  @apply bg-input/30 border-input focus-visible:border-ring focus-visible:ring-ring/50 rounded-lg border px-3 py-2 text-base transition-colors focus-visible:ring-[3px] md:text-sm;
+}
+
+/* Label */
+.z-label {
+  @apply gap-2 text-sm leading-none font-medium;
+}
+
+/* Kbd */
+.z-kbd {
+  @apply bg-muted text-muted-foreground h-5 w-fit min-w-5 gap-1 rounded-sm px-1.5 font-mono text-[10px] font-medium;
+}
+
+/* Separator */
+.z-separator {
+  @apply bg-border shrink-0;
+}
+
+/* Skeleton */
+.z-skeleton {
+  @apply bg-muted rounded-md;
+}
+
+/* Spinner */
+.z-spinner {
+  @apply text-gold;
+}
+
+/* Alert */
+.z-alert {
+  @apply grid gap-1 rounded-lg border px-3 py-2 text-left text-sm;
+}
+.z-alert-variant-default {
+  @apply bg-card text-card-foreground;
+}
+.z-alert-variant-destructive {
+  @apply text-danger bg-error border-danger/20;
+}
+.z-alert-title {
+  @apply font-medium;
+}
+.z-alert-description {
+  @apply text-muted-foreground text-sm;
+}
+
+/* Dialog */
+.z-dialog-overlay {
+  @apply data-expanded:animate-in data-closed:animate-out data-closed:fade-out-0 data-expanded:fade-in-0 bg-black/40 duration-150 backdrop-blur-sm;
+}
+.z-dialog-content {
+  @apply bg-popover data-expanded:animate-in data-closed:animate-out data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 ring-foreground/10 grid max-w-[calc(100%-2rem)] gap-4 rounded-xl p-5 text-sm ring-1 shadow-2xl duration-150 sm:max-w-lg;
+}
+.z-dialog-close {
+  @apply absolute top-3 right-3;
+}
+.z-dialog-header {
+  @apply gap-2;
+}
+.z-dialog-footer {
+  @apply border-t border-border pt-4;
+}
+.z-dialog-title {
+  @apply text-base leading-none font-semibold font-serif tracking-tight;
+}
+.z-dialog-description {
+  @apply text-muted-foreground text-sm;
+}
+
+/* Sheet */
+.z-sheet-overlay {
+  @apply data-expanded:animate-in data-closed:animate-out data-closed:fade-out-0 data-expanded:fade-in-0 bg-black/40 duration-150 backdrop-blur-sm;
+}
+.z-sheet-content {
+  @apply bg-popover data-expanded:animate-in data-closed:animate-out data-[side=right]:data-closed:slide-out-to-right-10 data-[side=right]:data-expanded:slide-in-from-right-10 data-closed:fade-out-0 data-expanded:fade-in-0 fixed z-50 flex flex-col gap-4 text-sm shadow-2xl transition duration-200 ease-in-out data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-full data-[side=right]:max-w-md data-[side=right]:border-l;
+}
+.z-sheet-close {
+  @apply absolute top-3 right-3;
+}
+.z-sheet-header {
+  @apply gap-1 p-5;
+}
+.z-sheet-footer {
+  @apply gap-2 p-5;
+}
+.z-sheet-title {
+  @apply text-foreground text-base font-semibold font-serif tracking-tight;
+}
+.z-sheet-description {
+  @apply text-muted-foreground text-sm;
+}
+
+/* Tooltip */
+.z-tooltip-content {
+  @apply data-expanded:animate-in data-expanded:fade-in-0 data-expanded:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 rounded-md px-3 py-1.5 text-xs shadow-lg;
+}
+
+/* Switch */
+.z-switch {
+  @apply data-checked:bg-primary bg-input focus-visible:border-ring focus-visible:ring-ring/50 shrink-0 rounded-full border border-transparent focus-visible:ring-[3px] data-[size=default]:h-[18.4px] data-[size=default]:w-[32px] data-[size=sm]:h-[14px] data-[size=sm]:w-[24px];
+}
+.z-switch-thumb {
+  @apply bg-foreground data-checked:bg-primary-foreground rounded-full group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 group-data-[size=default]/switch:data-checked:translate-x-[calc(100%-2px)] group-data-[size=sm]/switch:data-checked:translate-x-[calc(100%-2px)] group-data-[size=default]/switch:translate-x-0 group-data-[size=sm]/switch:translate-x-0;
+}
+
+/* ── Custom scrollbar ── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(1 0 0 / 0.12);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(1 0 0 / 0.2);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(1 0 0 / 0.12) transparent;
+}
+
+/* ── App-specific layout ── */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  @apply font-mono text-[11px] uppercase tracking-[0.18em] text-gold;
+}
+
+.graph-canvas,
+.graph-canvas__surface {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Hirsel document surface ── */
+
+.document-html {
+  --hirsel-stat-min: 132px;
+  color: var(--foreground);
+  font-size: 0.82rem;
+  line-height: 1.68;
+}
+
+.document-html > :first-child {
+  margin-top: 0;
+}
+
+.document-html > :last-child {
+  margin-bottom: 0;
+}
+
+.document-html p,
+.document-html ul,
+.document-html ol {
+  margin: 0 0 0.8rem;
+}
+
+.document-html ul,
+.document-html ol {
+  padding-left: 1.15rem;
+}
+
+.document-html a {
+  color: var(--gold);
+}
+
+.document-html hirsel-card,
+.document-html hirsel-callout,
+.document-html hirsel-tabs,
+.document-html hirsel-disclosure,
+.document-html hirsel-progress,
+.document-html hirsel-stat-grid,
+.document-html hirsel-stat,
+.document-html hirsel-node-ref,
+.document-html hirsel-doc-link,
+.document-html hirsel-doc-embed,
+.document-html hirsel-node-field,
+.document-html hirsel-node-list,
+.document-html hirsel-doc-target {
+  display: block;
+  margin: 0 0 0.8rem;
+}
+
+.document-html .hirsel-code-empty {
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 86%, white 4%);
+  padding: 0.85rem 0.95rem;
+  color: var(--muted-foreground);
+}
+
+.document-html .hirsel-code-empty[data-tone="danger"] {
+  border-color: color-mix(in oklab, var(--danger) 55%, var(--border));
+  background: color-mix(in oklab, var(--card) 84%, var(--danger) 16%);
+  color: color-mix(in oklab, var(--danger) 72%, white 18%);
+}
+
+.document-html .hirsel-card-shell,
+.document-html .hirsel-tabs-shell,
+.document-html .hirsel-disclosure-shell,
+.document-html .hirsel-progress-shell,
+.document-html .hirsel-stat-shell {
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 92%, white 2%);
+}
+
+.document-html .hirsel-card-shell[data-tone="muted"],
+.document-html .hirsel-tabs-shell[data-tone="muted"],
+.document-html .hirsel-disclosure-shell[data-tone="muted"],
+.document-html .hirsel-progress-shell[data-tone="muted"],
+.document-html .hirsel-stat-shell[data-tone="muted"] {
+  background: color-mix(in oklab, var(--card) 76%, var(--muted) 24%);
+}
+
+.document-html .hirsel-card-shell[data-tone="info"],
+.document-html .hirsel-tabs-shell[data-tone="info"],
+.document-html .hirsel-disclosure-shell[data-tone="info"],
+.document-html .hirsel-progress-shell[data-tone="info"],
+.document-html .hirsel-stat-shell[data-tone="info"] {
+  border-left: 3px solid var(--blue);
+}
+
+.document-html .hirsel-card-shell[data-tone="success"],
+.document-html .hirsel-tabs-shell[data-tone="success"],
+.document-html .hirsel-disclosure-shell[data-tone="success"],
+.document-html .hirsel-progress-shell[data-tone="success"],
+.document-html .hirsel-stat-shell[data-tone="success"] {
+  border-left: 3px solid var(--success-foreground);
+}
+
+.document-html .hirsel-card-shell[data-tone="warning"],
+.document-html .hirsel-tabs-shell[data-tone="warning"],
+.document-html .hirsel-disclosure-shell[data-tone="warning"],
+.document-html .hirsel-progress-shell[data-tone="warning"],
+.document-html .hirsel-stat-shell[data-tone="warning"] {
+  border-left: 3px solid var(--gold);
+}
+
+.document-html .hirsel-card-shell[data-tone="danger"],
+.document-html .hirsel-tabs-shell[data-tone="danger"],
+.document-html .hirsel-disclosure-shell[data-tone="danger"],
+.document-html .hirsel-progress-shell[data-tone="danger"],
+.document-html .hirsel-stat-shell[data-tone="danger"] {
+  border-left: 3px solid var(--danger);
+}
+
+.document-html .hirsel-card-shell {
+  padding: 1rem 1.05rem;
+}
+
+.document-html .hirsel-card-header {
+  margin-bottom: 0.8rem;
+}
+
+.document-html .hirsel-card-eyebrow,
+.document-html .hirsel-stat-label,
+.document-html .hirsel-progress-label,
+.document-html .hirsel-progress-detail,
+.document-html .hirsel-tab-button,
+.document-html .hirsel-doc-link-kind {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.document-html .hirsel-card-eyebrow {
+  margin-bottom: 0.25rem;
+  font-size: 0.62rem;
+  color: var(--muted-foreground);
+}
+
+.document-html .hirsel-card-heading {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.document-html .hirsel-callout-shell {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--muted-foreground);
+  background: color-mix(in oklab, var(--card) 90%, white 2%);
+  padding: 0.85rem 1rem;
+}
+
+.document-html .hirsel-callout-shell[data-tone="info"] {
+  border-left-color: var(--blue);
+  background: color-mix(in oklab, var(--card) 80%, var(--blue) 20%);
+}
+
+.document-html .hirsel-callout-shell[data-tone="success"] {
+  border-left-color: var(--success-foreground);
+  background: color-mix(in oklab, var(--card) 80%, var(--success-foreground) 14%);
+}
+
+.document-html .hirsel-callout-shell[data-tone="warning"] {
+  border-left-color: var(--gold);
+  background: color-mix(in oklab, var(--card) 82%, var(--gold) 18%);
+}
+
+.document-html .hirsel-callout-shell[data-tone="danger"] {
+  border-left-color: var(--danger);
+  background: color-mix(in oklab, var(--card) 82%, var(--danger) 18%);
+}
+
+.document-html .hirsel-callout-title {
+  margin-bottom: 0.3rem;
+  font-weight: 650;
+}
+
+.document-html hirsel-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--hirsel-stat-min), 1fr));
+  gap: 0.65rem;
+}
+
+.document-html .hirsel-stat-shell {
+  padding: 0.85rem 1rem 0.95rem;
+}
+
+.document-html .hirsel-stat-label,
+.document-html .hirsel-progress-label,
+.document-html .hirsel-progress-detail {
+  font-size: 0.62rem;
+}
+
+.document-html .hirsel-stat-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--foreground);
+}
+
+.document-html .hirsel-stat-detail {
+  margin-top: 0.55rem;
+  color: var(--muted-foreground);
+}
+
+.document-html .hirsel-tabs-shell {
+  overflow: hidden;
+}
+
+.document-html .hirsel-tabs-nav {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 76%, var(--muted) 24%);
+  padding: 0 0.5rem;
+}
+
+.document-html .hirsel-tab-button {
+  flex: 0 0 auto;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  padding: 0.58rem 0.75rem;
+  margin-bottom: -1px;
+  font-size: 0.68rem;
+  color: var(--muted-foreground);
+}
+
+.document-html .hirsel-tab-button[aria-selected="true"] {
+  border-bottom-color: var(--foreground);
+  color: var(--foreground);
+}
+
+.document-html .hirsel-tab-button:hover {
+  color: var(--foreground);
+}
+
+.document-html .hirsel-tabs-body {
+  padding: 1rem;
+}
+
+.document-html .hirsel-disclosure-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.8rem 1rem;
+}
+
+.document-html .hirsel-disclosure-summary::-webkit-details-marker {
+  display: none;
+}
+
+.document-html .hirsel-disclosure-summary:hover {
+  background: color-mix(in oklab, var(--card) 78%, var(--muted) 22%);
+}
+
+.document-html .hirsel-disclosure-title {
+  font-weight: 600;
+}
+
+.document-html .hirsel-disclosure-chevron {
+  display: flex;
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--muted-foreground);
+  transition: transform 150ms ease;
+}
+
+.document-html .hirsel-disclosure-shell[open] .hirsel-disclosure-chevron {
+  transform: rotate(180deg);
+}
+
+.document-html .hirsel-disclosure-body {
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 1rem 1rem;
+}
+
+.document-html .hirsel-progress-shell {
+  padding: 0.85rem 1rem 1rem;
+}
+
+.document-html .hirsel-progress-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+.document-html .hirsel-progress-label {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.document-html .hirsel-progress-detail {
+  color: var(--muted-foreground);
+}
+
+.document-html .hirsel-progress-track {
+  overflow: hidden;
+  height: 0.5rem;
+  background: color-mix(in oklab, var(--card) 70%, white 8%);
+}
+
+.document-html .hirsel-progress-fill {
+  height: 100%;
+  background: var(--success-foreground);
+  transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.document-html .hirsel-progress-shell[data-tone="info"] .hirsel-progress-fill {
+  background: var(--blue);
+}
+
+.document-html .hirsel-progress-shell[data-tone="warning"] .hirsel-progress-fill {
+  background: var(--gold);
+}
+
+.document-html .hirsel-progress-shell[data-tone="danger"] .hirsel-progress-fill {
+  background: var(--danger);
+}
+
+.document-html .hirsel-progress-footer {
+  margin-top: 0.6rem;
+  color: var(--muted-foreground);
+}
+
+.document-html .hirsel-fileref-pill,
+.document-html .hirsel-node-list-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 78%, var(--muted) 22%);
+  color: var(--foreground);
+  padding: 0.42rem 0.65rem;
+  font-size: 0.74rem;
+}
+
+.document-html .hirsel-fileref-pill:hover,
+.document-html .hirsel-node-list-link:hover {
+  border-color: color-mix(in oklab, var(--gold) 60%, var(--border));
+}
+
+.document-html .hirsel-fileref-label {
+  font-weight: 600;
+}
+
+.document-html .hirsel-fileref-path {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.document-html .hirsel-node-list {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.document-html .hirsel-doc-link-card {
+  display: block;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 88%, white 2%);
+  padding: 0.7rem 0.85rem;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.document-html .hirsel-doc-link-card:hover {
+  border-color: color-mix(in oklab, var(--gold) 60%, var(--border));
+  background: color-mix(in oklab, var(--card) 82%, var(--gold) 10%);
+}
+
+.document-html .hirsel-doc-link-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.document-html .hirsel-doc-link-kind {
+  border: 1px solid color-mix(in oklab, var(--gold) 55%, var(--border));
+  color: var(--gold-soft);
+  padding: 0.1rem 0.42rem;
+  font-size: 0.56rem;
+}
+
+.document-html .hirsel-doc-link-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.document-html .hirsel-doc-link-summary {
+  margin-top: 0.4rem;
+  color: var(--muted-foreground);
+}
+
+.document-html .hirsel-doc-embed-shell {
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--background) 86%, var(--card) 14%);
+}
+
+.document-html .hirsel-doc-embed-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 88%, white 2%);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.document-html .hirsel-doc-embed-body {
+  padding: 0.85rem;
+  max-height: 34rem;
+  overflow-y: auto;
+}
+
+@media (max-width: 980px) {
+  body {
+    overflow: auto;
+  }
+}
